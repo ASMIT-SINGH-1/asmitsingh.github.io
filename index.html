@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Asmit Singh</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:Arial, sans-serif;
+background:#05070d;
+color:white;
+overflow-x:hidden;
+}
+
+/* ===== FUTURISTIC BACKGROUND ===== */
+.bg{
+position:fixed;
+width:100%;
+height:100%;
+z-index:-1;
+background:
+radial-gradient(circle at 20% 30%,rgba(56,189,248,0.25),transparent 40%),
+radial-gradient(circle at 80% 70%,rgba(191, 8, 75, 0.25),transparent 40%),
+#05070d;
+}
+
+/* ===== NAVBAR ===== */
+nav{
+position:fixed;
+width:100%;
+padding:20px;
+background:rgba(5,7,13,0.6);
+backdrop-filter:blur(12px);
+z-index:10;
+}
+nav a{
+color:white;
+margin-right:25px;
+text-decoration:none;
+font-weight:bold;
+}
+
+/* ===== HERO ===== */
+.hero{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+}
+
+.hero h1{
+font-size:70px;
+background:linear-gradient(90deg,#38bdf8,#a78bfa);
+-webkit-background-clip:text;
+color:transparent;
+text-shadow:0 0 25px rgba(56,189,248,0.5);
+}
+
+/* ===== SECTIONS ===== */
+section{
+padding:120px 10%;
+}
+
+/* ===== GLASS CARD ===== */
+.projects{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:30px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+border-radius:20px;
+overflow:hidden;
+transition:0.4s;
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.08);
+opacity:0;
+transform:translateY(40px);
+}
+
+.card.show{
+opacity:1;
+transform:translateY(0);
+}
+
+.card:hover{
+transform:translateY(-10px) scale(1.02);
+box-shadow:0 0 40px #38bdf8;
+}
+
+.card img{
+width:100%;
+height:220px;
+object-fit:cover;
+}
+
+.card h3{
+padding:20px;
+}
+
+/* ===== BIG TEXT ===== */
+.bigtext{
+font-size:55px;
+max-width:800px;
+line-height:1.2;
+}
+
+/* ===== CONTACT BUTTONS ===== */
+.contact{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+margin-top:30px;
+}
+
+.contact a{
+padding:12px 22px;
+border-radius:12px;
+border:1px solid #38bdf8;
+color:#38bdf8;
+text-decoration:none;
+transition:0.3s;
+}
+
+.contact a:hover{
+background:#38bdf8;
+color:black;
+box-shadow:0 0 20px #38bdf8;
+}
+
+/* ===== FOOTER ===== */
+footer{
+text-align:center;
+padding:40px;
+opacity:0.6;
+}
+
+/* ===== CURSOR GLOW ===== */
+.cursor{
+position:fixed;
+width:200px;
+height:200px;
+border-radius:50%;
+background:radial-gradient(circle,#38bdf8,transparent 70%);
+pointer-events:none;
+mix-blend-mode:screen;
+opacity:0.3;
+transform:translate(-50%,-50%);
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+<div class="cursor" id="cursor"></div>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#projects">Projects</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+<h1 id="typing"></h1>
+<p>C++ • JavaScript  • Python  • Futuristic Developer</p>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+<h2>Selected Work</h2>
+
+<div class="projects">
+
+<div class="card">
+<img src="images/Screenshot 2025-12-12 at 4.25.38 PM.png">
+<h3>ShowcaseX Portfolio</h3>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80">
+<h3>C++ DSA Projects</h3>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&w=800&q=80">
+<h3>Modern UI Experiments</h3>
+</div>
+
+</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+<p class="bigtext">
+I design futuristic interfaces inspired by modern Framer portfolios and cutting-edge developer aesthetics.
+</p>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+<h2>Connect With Me</h2>
+
+<div class="contact">
+<a href="https://github.com/ASMIT-SINGH-1">GitHub</a>
+<a href="https://www.linkedin.com/in/asmit-singh-330b49381/">Linkedin</a>
+<a href="mailto:asmit210607@gmail.com">Email</a>
+</div>
+</section>
+
+<footer>
+© 2026 Asmit Singh
+</footer>
+
+<script>
+/* typing effect */
+let text="Hi, I'm Asmit Singh.";
+let i=0;
+function type(){
+if(i<text.length){
+document.getElementById("typing").innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,40);
+}}
+type();
+
+/* cursor glow */
+document.addEventListener("mousemove",e=>{
+let cursor=document.getElementById("cursor");
+cursor.style.left=e.clientX+"px";
+cursor.style.top=e.clientY+"px";
+});
+
+/* reveal animation */
+let cards=document.querySelectorAll(".card");
+window.addEventListener("scroll",()=>{
+cards.forEach(card=>{
+let rect=card.getBoundingClientRect();
+if(rect.top<window.innerHeight-100){
+card.classList.add("show");
+}
+});
+});
+</script>
+
+</body>
+</html>
