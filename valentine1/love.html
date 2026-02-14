@@ -3,86 +3,189 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Only For You ❤️</title>
+<title>Our Love Story ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 
 <style>
+
 body{
     margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#ff416c,#ff4b2b);
-    font-family:Arial;
+    overflow:hidden;
+    background:black;
+    font-family:'Poppins',sans-serif;
+}
+
+/* SLIDES */
+.slide{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-size:cover;
+    background-position:center;
+    opacity:0;
+    transform:scale(1);
+    transition:opacity 2s ease, transform 6s ease;
+}
+
+.active{
+    opacity:1;
+    transform:scale(1.15);
+}
+
+/* EDGE GLOW */
+.glow{
+    position:absolute;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    box-shadow:
+        inset 0 0 120px rgba(255,80,120,0.8),
+        inset 0 0 200px rgba(255,0,90,0.5);
+    animation:glowPulse 4s infinite alternate;
+}
+
+@keyframes glowPulse{
+from{
+box-shadow: inset 0 0 80px rgba(255,80,120,0.5);
+}
+to{
+box-shadow: inset 0 0 180px rgba(255,0,120,0.9);
+}
+}
+
+/* FILM GRAIN EFFECT */
+.grain{
+    pointer-events:none;
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:rgba(255,255,255,0.03);
+}
+
+@keyframes grain{
+0%{transform:translate(0,0)}
+25%{transform:translate(-2%,2%)}
+50%{transform:translate(2%,-2%)}
+75%{transform:translate(-1%,1%)}
+100%{transform:translate(1%,-1%)}
+}
+
+/* TYPING TEXT */
+.caption{
+    position:absolute;
+    bottom:50px;
+    width:100%;
+    text-align:center;
     color:white;
-    text-align:center;
+    font-size:26px;
+    text-shadow:0 0 15px pink;
+    z-index:3;
 }
 
-.box{
-    background:rgba(255,255,255,0.15);
-    padding:40px;
-    border-radius:20px;
-    backdrop-filter:blur(15px);
+/* ROSE PETALS */
+.petal{
+    position:absolute;
+    top:-20px;
+    font-size:20px;
+    animation:fall linear forwards;
 }
 
-input{
-    padding:12px;
-    border:none;
-    border-radius:8px;
-    margin-top:15px;
-    font-size:16px;
-    text-align:center;
+@keyframes fall{
+    to{
+        transform:translateY(110vh) rotate(360deg);
+        opacity:0;
+    }
 }
 
-button{
-    margin-top:15px;
-    padding:10px 25px;
-    border:none;
-    border-radius:20px;
-    background:white;
-    color:#ff416c;
-    font-size:16px;
-    cursor:pointer;
-}
-
-#error{
-    margin-top:10px;
-    color:#ffdede;
-    display:none;
-}
 </style>
 </head>
 
 <body>
 
-<div class="box">
-<h2>💌 Only For My Love</h2>
-<p>Enter our special secret ❤️</p>
+<!-- SLIDES -->
+<div class="slide active" style="background-image:url('photo1.jpg')"></div>
+<div class="slide" style="background-image:url('photo2.jpg')"></div>
+<div class="slide" style="background-image:url('photo3.jpg')"></div>
+<div class="slide" style="background-image:url('photo4.jpg')"></div>
+<div class="slide" style="background-image:url('photo5.jpg')"></div>
 
-<input type="password" id="pass" placeholder="Enter password">
+<div class="glow"></div>
+<div class="grain"></div>
 
-<br>
-<button onclick="checkPass()">Unlock ❤️</button>
+<div class="caption" id="caption"></div>
 
-<div id="error">Wrong password 😢 Try again</div>
-</div>
+<!-- MUSIC -->
+<audio id="music" loop>
+<source src="music.mp3" type="audio/mp3">
+</audio>
 
 <script>
 
-function checkPass(){
+/* MUSIC AUTOPLAY FIX */
+const music=document.getElementById("music");
+window.addEventListener("load",()=>{
+music.play().catch(()=>{
+document.body.addEventListener("click",()=>{
+music.play();
+},{once:true});
+});
+});
 
-    /* CHANGE PASSWORD HERE */
-    const correctPassword = "1007"; 
+/* SLIDESHOW */
+const slides=document.querySelectorAll(".slide");
+let index=0;
 
-    const entered =
-        document.getElementById("pass").value;
+setInterval(()=>{
+slides[index].classList.remove("active");
+index=(index+1)%slides.length;
+slides[index].classList.add("active");
+typeText(); // change caption with photo
+},6000);
 
-    if(entered === correctPassword){
-        window.location.href="index.html";
-    }else{
-        document.getElementById("error").style.display="block";
-    }
+
+/* TYPING CAPTIONS */
+const texts=[
+"You are my favorite hello ❤️",
+"Every memory is beautiful with you ✨",
+"My heart chose you forever 💖",
+"You make my world complete 🌙",
+"I love you endlessly ❤️"
+];
+
+let textIndex=0;
+const caption=document.getElementById("caption");
+
+function typeText(){
+caption.textContent="";
+let i=0;
+let current=texts[textIndex];
+
+let typing=setInterval(()=>{
+caption.textContent+=current[i];
+i++;
+if(i>=current.length){
+clearInterval(typing);
 }
+},60);
+
+textIndex=(textIndex+1)%texts.length;
+}
+
+typeText();
+
+/* ROSE PETALS EFFECT */
+setInterval(()=>{
+let petal=document.createElement("div");
+petal.className="petal";
+petal.innerHTML="❤️";
+petal.style.left=Math.random()*100+"vw";
+petal.style.animationDuration=(Math.random()*4+4)+"s";
+document.body.appendChild(petal);
+
+setTimeout(()=>petal.remove(),8000);
+},300);
+
 </script>
 
 </body>
