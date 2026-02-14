@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Only For You ❤️</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ff416c,#ff4b2b);
+    font-family:Arial;
+    color:white;
+    text-align:center;
+}
+
+.box{
+    background:rgba(255,255,255,0.15);
+    padding:40px;
+    border-radius:20px;
+    backdrop-filter:blur(15px);
+}
+
+input{
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    margin-top:15px;
+    font-size:16px;
+    text-align:center;
+}
+
+button{
+    margin-top:15px;
+    padding:10px 25px;
+    border:none;
+    border-radius:20px;
+    background:white;
+    color:#ff416c;
+    font-size:16px;
+    cursor:pointer;
+}
+
+#error{
+    margin-top:10px;
+    color:#ffdede;
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h2>💌 Only For My Love</h2>
+<p>Enter our special secret ❤️</p>
+
+<input type="password" id="pass" placeholder="Enter password">
+
+<br>
+<button onclick="checkPass()">Unlock ❤️</button>
+
+<div id="error">Wrong password 😢 Try again</div>
+</div>
+
+<script>
+
+function checkPass(){
+
+    /* CHANGE PASSWORD HERE */
+    const correctPassword = "1402"; 
+
+    const entered =
+        document.getElementById("pass").value;
+
+    if(entered === correctPassword){
+        window.location.href="index.html";
+    }else{
+        document.getElementById("error").style.display="block";
+    }
+}
+</script>
+
+</body>
+</html>
