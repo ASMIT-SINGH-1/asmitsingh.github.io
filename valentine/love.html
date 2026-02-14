@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Love Story ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+    margin:0;
+    overflow:hidden;
+    background:black;
+    font-family:'Poppins',sans-serif;
+}
+
+/* SLIDES */
+.slide{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-size:cover;
+    background-position:center;
+    opacity:0;
+    transform:scale(1);
+    transition:opacity 2s ease, transform 6s ease;
+}
+
+.active{
+    opacity:1;
+    transform:scale(1.15);
+}
+
+/* EDGE GLOW */
+.glow{
+    position:absolute;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    box-shadow:
+        inset 0 0 120px rgba(255,80,120,0.8),
+        inset 0 0 200px rgba(255,0,90,0.5);
+    animation:glowPulse 4s infinite alternate;
+}
+
+@keyframes glowPulse{
+from{
+box-shadow: inset 0 0 80px rgba(255,80,120,0.5);
+}
+to{
+box-shadow: inset 0 0 180px rgba(255,0,120,0.9);
+}
+}
+
+/* FILM GRAIN EFFECT */
+.grain{
+    pointer-events:none;
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:url("https://i.imgur.com/8KQZ7wR.png");
+    opacity:0.08;
+    animation:grain 0.4s infinite;
+}
+
+@keyframes grain{
+0%{transform:translate(0,0)}
+25%{transform:translate(-2%,2%)}
+50%{transform:translate(2%,-2%)}
+75%{transform:translate(-1%,1%)}
+100%{transform:translate(1%,-1%)}
+}
+
+/* TYPING TEXT */
+.caption{
+    position:absolute;
+    bottom:50px;
+    width:100%;
+    text-align:center;
+    color:white;
+    font-size:26px;
+    text-shadow:0 0 15px pink;
+    z-index:3;
+}
+
+/* ROSE PETALS */
+.petal{
+    position:absolute;
+    top:-20px;
+    font-size:20px;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh) rotate(360deg);
+        opacity:0;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SLIDES -->
+<div class="slide active" style="background-image:url('photo1.jpg')"></div>
+<div class="slide" style="background-image:url('photo2.jpg')"></div>
+<div class="slide" style="background-image:url('photo3.jpg')"></div>
+<div class="slide" style="background-image:url('photo4.jpg')"></div>
+<div class="slide" style="background-image:url('photo5.jpg')"></div>
+
+<div class="glow"></div>
+<div class="grain"></div>
+
+<div class="caption" id="caption"></div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+<source src="music.mp3" type="audio/mp3">
+</audio>
+
+<script>
+
+/* MUSIC AUTOPLAY FIX */
+const music=document.getElementById("music");
+window.addEventListener("load",()=>{
+music.play().catch(()=>{
+document.body.addEventListener("click",()=>{
+music.play();
+},{once:true});
+});
+});
+
+/* SLIDESHOW */
+const slides=document.querySelectorAll(".slide");
+let index=0;
+
+setInterval(()=>{
+slides[index].classList.remove("active");
+index=(index+1)%slides.length;
+slides[index].classList.add("active");
+typeText(); // change caption with photo
+},6000);
+
+
+/* TYPING CAPTIONS */
+const texts=[
+"You are my favorite hello ❤️",
+"Every memory is beautiful with you ✨",
+"My heart chose you forever 💖",
+"You make my world complete 🌙",
+"I love you endlessly ❤️"
+];
+
+let textIndex=0;
+const caption=document.getElementById("caption");
+
+function typeText(){
+caption.textContent="";
+let i=0;
+let current=texts[textIndex];
+
+let typing=setInterval(()=>{
+caption.textContent+=current[i];
+i++;
+if(i>=current.length){
+clearInterval(typing);
+}
+},60);
+
+textIndex=(textIndex+1)%texts.length;
+}
+
+typeText();
+
+/* ROSE PETALS EFFECT */
+setInterval(()=>{
+let petal=document.createElement("div");
+petal.className="petal";
+petal.innerHTML="❤️";
+petal.style.left=Math.random()*100+"vw";
+petal.style.animationDuration=(Math.random()*4+4)+"s";
+document.body.appendChild(petal);
+
+setTimeout(()=>petal.remove(),8000);
+},300);
+
+</script>
+
+</body>
+</html>
