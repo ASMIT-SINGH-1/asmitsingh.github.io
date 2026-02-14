@@ -68,31 +68,47 @@ body{
 </div>
 
 <script>
-const slider=document.getElementById("slider");
-const track=document.getElementById("track");
+const slider = document.getElementById("slider");
+const track = document.getElementById("track");
 
-let drag=false;
+let dragging = false;
 
-slider.onmousedown=()=>drag=true;
-document.onmouseup=()=>drag=false;
+/* ---------- DESKTOP ---------- */
+slider.addEventListener("mousedown", () => dragging = true);
+document.addEventListener("mouseup", () => dragging = false);
 
-document.onmousemove=(e)=>{
- if(!drag) return;
+document.addEventListener("mousemove", moveSlider);
 
- let rect=track.getBoundingClientRect();
- let x=e.clientX-rect.left-30;
+/* ---------- MOBILE ---------- */
+slider.addEventListener("touchstart", () => dragging = true);
+document.addEventListener("touchend", () => dragging = false);
 
- if(x<0)x=0;
+document.addEventListener("touchmove", moveSlider);
 
- let max=rect.width-60;
+/* ---------- MOVE FUNCTION ---------- */
+function moveSlider(e) {
 
- if(x>=max){
-   x=max;
-   window.location.href="love.html"; // OPEN NEW PAGE
- }
+    if (!dragging) return;
 
- slider.style.left=x+"px";
-};
+    const rect = track.getBoundingClientRect();
+
+    let clientX = e.clientX || e.touches[0].clientX;
+
+    let x = clientX - rect.left - 30;
+
+    if (x < 0) x = 0;
+
+    const max = rect.width - 60;
+
+    if (x >= max) {
+        x = max;
+
+        /* OPEN SECOND PAGE */
+        window.location.href = "love.html";
+    }
+
+    slider.style.left = x + "px";
+}
 </script>
 
 </body>
